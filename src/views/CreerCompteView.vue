@@ -1,6 +1,5 @@
 <script setup>
-import { useRouter } from 'vue-router';
-const router = useRouter();
+const router = inject('router');
 
 let member = reactive({
     fullname: 'Gilles FRANCOIS',

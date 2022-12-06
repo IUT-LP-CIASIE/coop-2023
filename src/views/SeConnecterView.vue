@@ -1,9 +1,6 @@
 <script setup>
-import { useRouter } from 'vue-router';
-import { useSessionStore } from '@/stores/session'
-
-const router = useRouter();
-const session = useSessionStore();
+const router = inject('router');
+const session = inject('store');
 
 let member = reactive({
     email: 'gilles@gmail.com',

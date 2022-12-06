@@ -1,5 +1,4 @@
 <script setup>
-import { useRouter } from 'vue-router';
 import { useSessionStore } from '@/stores/session'
 
 const session = useSessionStore();

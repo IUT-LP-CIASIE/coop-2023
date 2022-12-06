@@ -1,6 +1,14 @@
-import { createApp } from 'vue'
+import { createApp, provide } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import { useRouter } from 'vue-router';
+import { useGlobal } from '@/mixins/global'
+import { useSessionStore } from '@/stores/session'
+
+
+provide('router', useRouter())
+provide('global', useGlobal())
+provide('session', useSessionStore())
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)

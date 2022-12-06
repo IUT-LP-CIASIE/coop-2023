@@ -1,10 +1,9 @@
-import { useRouter } from 'vue-router';
 import { reactive } from 'vue'
 import { defineStore } from 'pinia'
+import { useGlobal } from '@/mixins/global'
 
 export const useSessionStore = defineStore('session', () => {
-  const router = useRouter();
-  
+  const global = inject('global');
   const data = reactive({
     member: {},
     token: false
@@ -30,7 +29,7 @@ export const useSessionStore = defineStore('session', () => {
      * Est-ce qu'un token membre est stocké dans le store ?
      */
     if (!data.token) {
-      seConnecter();
+      global.seConnecter();
       return false;
     } else {
       /**
@@ -42,7 +41,7 @@ export const useSessionStore = defineStore('session', () => {
       const d = await response;
 
       if (!d.token) {
-        seConnecter();
+        global.seConnecter();
        return false;
       }
 
@@ -51,12 +50,6 @@ export const useSessionStore = defineStore('session', () => {
     }
   }
 
-  /**
-   * Redirection vers la page de connexion
-   */
-  function seConnecter() {
-    router.push('/se-connecter')
-  }
 
   return {
     data,
