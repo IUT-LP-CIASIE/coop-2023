@@ -23,12 +23,12 @@ const router = createRouter({
       path: '/creer-conversation',
       name: 'creer-conversation',
       component: () => import('../views/CreerConversationView.vue')
-    }
-/*    {
+    },
+    {
       path: '/conversation/:id',
       name: 'conversation',
       component: () => import('../views/ConversationView.vue')
-    }*/
+    }
   ]
 })
 

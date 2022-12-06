@@ -1,10 +1,9 @@
 <script setup>
 //import TheWelcome from '../components/TheWelcome.vue'
 
-import { ref, onMounted } from 'vue';
-import { useSessionStore } from '@/stores/session'
+import { ref, onMounted, inject } from 'vue';
 
-const session = useSessionStore();
+const session = inject('session');
 
 let channels = ref([]);
 
@@ -29,7 +28,7 @@ onMounted(() => {
     </p>
     <ul>
       <li class="box" v-for="channel in channels">
-        <router-link to="">
+        <router-link :to="{name:'conversation', params : {id : channel.id}}">
         <h2 class="title is-3">{{ channel.topic }}</h2>
         <p class="subtitle">{{ channel.label }}</p>
         </router-link>
@@ -37,3 +36,11 @@ onMounted(() => {
     </ul>
   </main>
 </template>
+<style scoped>
+  .box{
+    transition:background .5s ease-in-out;
+  }
+  .box:hover {
+    background-color: rgba(0, 255, 179, 0.3);
+  }
+</style>
