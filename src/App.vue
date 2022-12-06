@@ -1,4 +1,13 @@
 <script setup>
+import { provide } from 'vue'
+import { useRouter } from 'vue-router';
+import { useGlobal } from '@/mixins/global'
+import { useSessionStore } from '@/stores/session'
+
+provide('global', useGlobal())
+provide('router', useRouter())
+provide('session', useSessionStore())
+
 </script>
 
 <template>

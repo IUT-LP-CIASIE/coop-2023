@@ -1,9 +1,9 @@
-import { reactive } from 'vue'
+import { reactive, inject } from 'vue'
 import { defineStore } from 'pinia'
 import { useGlobal } from '@/mixins/global'
 
 export const useSessionStore = defineStore('session', () => {
-  const global = inject('global');
+  const global = useGlobal();
   const data = reactive({
     member: {},
     token: false

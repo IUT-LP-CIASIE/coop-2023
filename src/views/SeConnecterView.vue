@@ -1,6 +1,7 @@
 <script setup>
+import { inject, reactive } from 'vue'
 const router = inject('router');
-const session = inject('store');
+const session = inject('session');
 
 let member = reactive({
     email: 'gilles@gmail.com',

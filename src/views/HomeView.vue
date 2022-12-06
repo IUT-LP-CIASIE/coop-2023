@@ -1,7 +1,7 @@
 <script setup>
 //import TheWelcome from '../components/TheWelcome.vue'
 
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useSessionStore } from '@/stores/session'
 
 const session = useSessionStore();
