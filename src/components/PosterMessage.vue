@@ -17,7 +17,6 @@ function envoyerMessage() {
         body
     }).then(response => {
         message.value='';
-        console.log(response);
         bus.emit('recharger-messages');
     });
 

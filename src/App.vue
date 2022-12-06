@@ -14,11 +14,6 @@ provide('session', useSessionStore())
 
 <template>
   <section class="section">
-<!--    <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
-    </nav>
--->
     <RouterView />
   </section>
 </template>

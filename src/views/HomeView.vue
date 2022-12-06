@@ -7,15 +7,15 @@ const session = inject('session');
 
 let channels = ref([]);
 
+if (session.isValid()) {
 onMounted(() => {
-  if (session.isValid()) {
     console.log('Nous pouvons travailler');
 
     api.get(`channels?token=${session.data.token}`).then(response => {
       channels.value = response;
     })
-  }
-})
+  })
+}
 </script>
 
 <template>

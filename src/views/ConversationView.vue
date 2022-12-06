@@ -9,32 +9,34 @@ const bus = inject('bus');
 const route = useRoute();
 const session = inject('session');
 
-bus.on('recharger-messages', () => {
-    console.log('ok')
-    chargerMessages();
+bus.on('recharger-messages',chargerMessages);
+
+
+const data = reactive({
+    // les détails de la conversation choisie
+    channel: {},
+    // les messages postés dans cette conversation
+    messages: []
 });
 
-
-let data = reactive({
-    // les détails de la conversation choisie
-    channel : {},
-    // les messages postés dans cette conversation
-    messages : []
-})
-
 async function chargerMessages() {
+    data.messages = [];
     const response = await api.get(`channels/${route.params.id}/posts?token=${session.data.token}`);
+    console.log(data, data.messages)
     data.messages = response;
-}
-function chargerConversation() {
-    api.get(`channels/${route.params.id}?token=${session.data.token}`).then(response => {
-        data.channel = response;
-    });
+    console.log(data, data.messages)
 }
 
+async function chargerConversation() {
+    const response = await api.get(`channels/${route.params.id}?token=${session.data.token}`);
+    data.channel = response;
+
+}
 onMounted(() => {
-    chargerConversation();
-    chargerMessages();
+    if (session.isValid()) {
+        chargerConversation();
+        chargerMessages();
+    }
 });
 </script>
 <template>
@@ -47,3 +49,7 @@ onMounted(() => {
         <poster-message :cid="data.channel.id"></poster-message>
     </div>
 </template>
+
+<style scoped>
+header {}
+</style>
