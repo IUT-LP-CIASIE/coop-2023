@@ -18,6 +18,8 @@ provide('session', useSessionStore())
   </section>
 </template>
 
-<style scoped>
-
+<style>
+html {
+  scroll-behavior: smooth;  
+}
 </style>

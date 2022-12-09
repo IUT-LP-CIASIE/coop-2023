@@ -9,10 +9,10 @@ const bus = inject('bus');
 const route = useRoute();
 const session = inject('session');
 
-bus.on('recharger-messages',chargerMessages);
+bus.on('recharger-messages', chargerMessages);
 
 
-const data = reactive({
+let state = reactive({
     // les détails de la conversation choisie
     channel: {},
     // les messages postés dans cette conversation
@@ -20,16 +20,16 @@ const data = reactive({
 });
 
 async function chargerMessages() {
-    data.messages = [];
+    // state.messages = [];
     const response = await api.get(`channels/${route.params.id}/posts?token=${session.data.token}`);
-    console.log(data, data.messages)
-    data.messages = response;
-    console.log(data, data.messages)
+    state.messages = response.reverse();
+    setTimeout(() => bus.emit('fin-recharger-messages'), 10);
+
 }
 
 async function chargerConversation() {
     const response = await api.get(`channels/${route.params.id}?token=${session.data.token}`);
-    data.channel = response;
+    state.channel = response;
 
 }
 onMounted(() => {
@@ -40,16 +40,29 @@ onMounted(() => {
 });
 </script>
 <template>
-    <div v-if="data.channel.id">
-        <h1 class="title">{{ data.channel.topic }}</h1>
-        <p class="subtitle">{{ data.channel.label }}</p>
-        <template v-for="message in data.messages">
-            <message :message="message"></message>
-        </template>
-        <poster-message :cid="data.channel.id"></poster-message>
+    <div v-if="state.channel.id">
+        <h1 class="title">{{ state.channel.topic }}</h1>
+        <p class="subtitle">{{ state.channel.label }}</p>
+        <div class="liste-messages">
+            <template v-for="message in state.messages">
+                <message :message="message"></message>
+            </template>
+        </div>
+        <poster-message :cid="state.channel.id"></poster-message>
     </div>
 </template>
 
 <style scoped>
-header {}
+.liste-messages {
+    margin-bottom: 5vh;
+}
+
+.liste-messages {
+    display: flex;
+    flex-direction: column;
+}
+
+.liste-messages .box {
+    margin: 0;
+}
 </style>

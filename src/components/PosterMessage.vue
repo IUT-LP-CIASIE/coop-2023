@@ -18,6 +18,11 @@ function envoyerMessage() {
     }).then(response => {
         message.value='';
         bus.emit('recharger-messages');
+        bus.off('fin-recharger-messages');
+        bus.on('fin-recharger-messages',() => {
+            console.log(response.id)
+            bus.emit(`defiler-message`, response.id);
+        });
     });
 
 }
