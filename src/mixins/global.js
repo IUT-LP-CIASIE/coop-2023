@@ -9,6 +9,7 @@ export const useGlobal = function() {
     function seConnecter() {
         router.push('/se-connecter');
    }
+
   return {
     seConnecter
   }

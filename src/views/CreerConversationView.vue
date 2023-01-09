@@ -1,5 +1,7 @@
 <script setup>
+import { reactive, inject } from 'vue'
 import { useSessionStore } from '@/stores/session'
+const router = inject('router');
 
 const session = useSessionStore();
 let channel = reactive({
@@ -15,7 +17,7 @@ function validationFormulaire() {
             alert(response.message)
         } else {
             console.log(response)
-
+            router.push('/');
         }
     })
 }
@@ -42,7 +44,7 @@ function validationFormulaire() {
 
                 <div class="field is-grouped">
                     <p class="control">
-                        <button class="button is-primary">Créer un compte</button>
+                        <button class="button is-primary">Ajouter une conversation</button>
                     </p>
                     <p class="control">
                         <router-link to="/" class="button">Annuler</router-link>

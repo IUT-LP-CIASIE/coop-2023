@@ -11,7 +11,6 @@ const session = inject('session');
 
 bus.on('recharger-messages', chargerMessages);
 
-
 let state = reactive({
     // les détails de la conversation choisie
     channel: {},
@@ -33,10 +32,10 @@ async function chargerConversation() {
 
 }
 onMounted(() => {
-    if (session.isValid()) {
-        chargerConversation();
-        chargerMessages();
-    }
+    // if (session.isValid()) {
+    chargerConversation();
+    chargerMessages();
+    // }
 });
 </script>
 <template>

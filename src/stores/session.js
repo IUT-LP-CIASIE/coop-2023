@@ -9,6 +9,11 @@ export const useSessionStore = defineStore('session', () => {
     token: false
   })
 
+  function endSession() {
+    data.member = {};
+    data.token = false;
+  }
+
   /**
    * Définir le contenu de la session
    * @param {object} member 
@@ -32,18 +37,19 @@ export const useSessionStore = defineStore('session', () => {
       global.seConnecter();
       return false;
     } else {
+
       /**
        * Est ce que le token stocké dans le store est toujours valide ? 
        */
       const mid = data.member.id;
-
       const response = await api.get(`members/${mid}/signedin?token=${data.token}`);
       const d = await response;
 
       if (!d.token) {
         global.seConnecter();
-       return false;
+        return false;
       }
+
 
       // la session est valide
       return true;
@@ -54,6 +60,7 @@ export const useSessionStore = defineStore('session', () => {
   return {
     data,
     setSession,
+    endSession,
     isValid
   }
 }, {

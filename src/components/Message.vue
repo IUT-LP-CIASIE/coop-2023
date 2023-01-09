@@ -1,6 +1,7 @@
 <script setup>
 import { defineProps, inject, onMounted, ref, reactive } from 'vue';
 const bus = inject('bus');
+const membresStore = inject('membres');
 
 const p = defineProps(['message']);
 
@@ -8,10 +9,16 @@ const messageElement = ref(null);
 
 let state = reactive({
     id: 0,
-    misEnAvant: false
+    misEnAvant: false,
+    membre: '',
+    date: ''
 })
 
 onMounted(() => {
+
+    state.membre = membresStore.getMembre(p.message.member_id);
+    let date = new Date(p.message.created_at);
+    state.date = 'le ' + date.toLocaleDateString() + ' à ' + date.toLocaleTimeString();
     state.id = p.message.id;
     bus.on('defiler-message', (mid) => {
         if (mid == state.id) {
@@ -36,7 +43,9 @@ onMounted(() => {
             <div class="media-content">
                 <div class="content">
                     <p>
-                        <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
+                        <strong>{{ state.membre.fullname }}</strong> <small>{{ state.membre.email }}</small> &middot; 
+                        <small>{{ state.date }}</small>
+
                         <br>
                         {{ p.message.message }}
                     </p>
