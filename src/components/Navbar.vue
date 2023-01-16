@@ -1,17 +1,16 @@
 <script setup>
 import { useSessionStore } from '@/stores/session'
-import { inject, reactive } from 'vue'
+import { onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const session = useSessionStore();
 
 const state = reactive({
     menuOuvert: false
 });
-
 function logOut() {
     if(!confirm('Voulez-vous vraiment vous déconnecter ?')) return;
-    const session = useSessionStore();
     session.endSession();
    router.push('/se-connecter');
 }

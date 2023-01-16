@@ -1,13 +1,27 @@
 import { reactive, inject } from 'vue'
 import { defineStore } from 'pinia'
 import { useGlobal } from '@/mixins/global'
+import { useRoute } from 'vue-router';
 
 export const useSessionStore = defineStore('session', () => {
+
   const global = useGlobal();
+  const route = useRoute();
+
+  const routesOuvertes = ['se-connecter', 'creer-un-compte'];
+
   const data = reactive({
     member: {},
     token: false
   })
+
+  /**
+     * La route courante est "ouverte" 
+     * et ne nécéssite pas d'être identifié
+   */
+  function isRouteOuverte(route) {
+    return routesOuvertes.includes(route.name);
+  }
 
   function endSession() {
     data.member = {};
@@ -30,6 +44,15 @@ export const useSessionStore = defineStore('session', () => {
    */
   async function isValid() {
     console.log('🍎 Pouvons nous afficher la liste des conversations ?');
+
+    /**
+     * La route courante est "ouverte" 
+     * et ne nécéssite pas d'être identifié
+     */
+    if (isRouteOuverte(route)) {
+      return true;
+    }
+
     /**
      * Est-ce qu'un token membre est stocké dans le store ?
      */
@@ -61,7 +84,8 @@ export const useSessionStore = defineStore('session', () => {
     data,
     setSession,
     endSession,
-    isValid
+    isValid,
+    isRouteOuverte
   }
 }, {
   persist: true,

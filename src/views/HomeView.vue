@@ -1,18 +1,20 @@
 <script setup>
 //import TheWelcome from '../components/TheWelcome.vue'
 
-import { ref, onMounted, inject } from 'vue';
+import { reactive, onMounted, inject } from 'vue';
 
 const session = inject('session');
 
-let channels = ref([]);
 
+const state = reactive({
+  channels : []
+}) 
 if (session.isValid()) {
   onMounted(() => {
     console.log('Nous pouvons travailler');
 
     api.get(`channels?token=${session.data.token}`).then(response => {
-      channels.value = response;
+      state.channels = response;
     })
   })
 }
@@ -27,7 +29,7 @@ if (session.isValid()) {
       </router-link>
     </p>
     <ul>
-      <li class="box" v-for="channel in channels">
+      <li class="box" v-for="channel in state.channels">
         <router-link :to="{ name: 'conversation', params: { id: channel.id } }">
           <h2 class="title is-3">{{ channel.topic }}</h2>
           <p class="subtitle">{{ channel.label }}</p>
