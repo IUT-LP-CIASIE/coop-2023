@@ -1,7 +1,9 @@
 <script setup>
+import { useMembresStore } from '@/stores/membres'
 import { defineProps, inject, onMounted, ref, reactive } from 'vue';
 const bus = inject('bus');
-const membresStore = inject('membres');
+// const membresStore = inject('membres');
+const membresStore = useMembresStore();
 
 const p = defineProps(['message']);
 

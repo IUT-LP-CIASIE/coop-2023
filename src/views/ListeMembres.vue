@@ -1,7 +1,9 @@
 <script setup>
 import { ref, onMounted, inject } from 'vue';
+import { useMembresStore } from '@/stores/membres'
 
-const membresStore = inject('membres');
+// const membresStore = inject('membres');
+const membresStore = useMembresStore();
 
 
 </script>

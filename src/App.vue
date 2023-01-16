@@ -20,7 +20,7 @@ const router = useRouter()
 provide('router', router)
 
 const membres = useMembresStore();
-provide('membres', membres)
+// provide('membres', membres)
 
 const session = useSessionStore();
 provide('session', session)
@@ -49,7 +49,6 @@ function demarrer() {
 </script>
 
 <template>
-  {{ state.sessionValid }}
   <template v-if="state.sessionValid">
     <Navbar />
   </template>
